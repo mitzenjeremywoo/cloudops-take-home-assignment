@@ -16,14 +16,18 @@ env:
   agent: ubuntu-20.04
   devfiletf: 'devtest.tfvars'
   s3deploybucket: 'kepungcodeartifact'
-
+  webappArtifact: 'deployment.zip'
+  devtestEnvironment: dev
+  uatEnvironment: uat
+  prodEnvironment: prod
+  
 jobs:
   tfplan:
     name: Terraform plan
     runs-on: ubuntu-20.04
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: zip web deployment
         run: |
@@ -35,19 +39,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.region }}
-
-      - name: Upload to S3
-        uses: aws-actions/amazon-s3-upload@v1
-        with:
-          bucket: kepungcodeartifact
-          key: deployment.zip
-
-      - name: Create Elastic Beanstalk Application Version
-        uses: aws-actions/create-elastic-beanstalk-application-version@v1
-        with:
-          application-name: my-app  # Replace with your application name
-          version-label: ${{ github.sha }}
-          source-bundle: s3://my-elasticbeanstalk-app/deployment.zip
           
       - name: Initialise project and view terraform plan
         run: |
@@ -60,9 +51,9 @@ jobs:
     needs: [tfplan]
     name: Web Deployment dev
     runs-on: ubuntu-20.04
-    
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: zip web deployment
         run: |
@@ -76,19 +67,15 @@ jobs:
           aws-region: ${{ env.region }}
 
       - name: Upload to S3
-        uses: aws-actions/amazon-s3-upload@v1
-        with:
-          bucket: ${{ env.s3deploybucket }}
-          key: deployment.zip
+        run: |
+          aws s3 cp ${{ env.webappArtifact }} s3://${{ env.s3deploybucket }}/${{ env.webappArtifact }}
 
-      - name: Create Elastic Beanstalk Application Version
-        uses: aws-actions/create-elastic-beanstalk-application-version@v1
-        with:
-          application-name: ${{ env.appname }}
-          version-label: ${{ github.sha }}
-          source-bundle: s3://${{ env.s3deploybucket}}/deployment.zip
-          
-     
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version --application-name ${{ env.appname }}-${{ env.env }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ secrets.s3deploybucket }},S3Key=${{ env.webappArtifact}}
+                    
+          aws elasticbeanstalk update-environment --environment-name ${{ env.devtestEnvironment }} --version-label ${{ github.sha }}
+      
   # deploy:
   #     name: Terraform Deploy
   #     needs: plan

@@ -1,5 +1,5 @@
 resource "aws_elastic_beanstalk_application" "webapp" {
-  name        = var.webapp.name
+  name        = "${var.webapp.name}-${var.webapp.env}"
   description = "Take home test"
 }
 
