@@ -23,7 +23,7 @@ env:
   
 jobs:
   tfplan:
-    uses: .github/workflows/terraform.yaml
+    uses: ./.github/workflows/terraform.yaml
     with: 
       #  tffile: ${{ env.devfiletf }}
       #  region: ${{ env.region }}
