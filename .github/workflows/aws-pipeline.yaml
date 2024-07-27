@@ -25,7 +25,8 @@ jobs:
   tfplan:
     uses: mitzenjeremywoo/cloudops-take-home-assignment/.github/workflows/terraform.yaml@main
     with: 
-       tffile: 'devtest.tfvars'
+       tffile: ${{ env.devfiletf }}
+       region: ${{ env.region }}
 
   appdeploy:
     needs: [tfplan]

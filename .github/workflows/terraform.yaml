@@ -4,6 +4,9 @@ on:
      tffile: 
         required: true
         type: string
+    region:
+      required: true
+      type: string 
 
 jobs:
   tfplan:
