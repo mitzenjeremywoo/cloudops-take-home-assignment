@@ -1,6 +1,10 @@
 on:
   workflow_call:
     inputs:
+      appname: 
+        required: true
+        type: string
+
       region:
         required: true
         type: string
