@@ -1,3 +1,7 @@
+
+# Notes
+Could have use a simple s3 for a simple deployment, but decided to use eb instead.
+
 # CloudOps Take Home Assignment
 This is a public repo that contains a take-home assignment for prospective CloudOps positions. Start by forking this repo and create a pull request to your forked repo when you are ready to present your solution!
 
