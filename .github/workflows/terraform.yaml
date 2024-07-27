@@ -1,43 +1,17 @@
-name: Cloudops sample deployment
-
 on:
-  workflow_dispatch:
-  push:
-    branches: [main]
-  #  paths: ["infra/**"]
+  workflow_call:
+    inputs:
+     tffile: 
+        required: true
+        type: string
 
-  pull_request:
-    branches: [main]
-  #  paths: ["infra/**"]
-
-env:
-  appname: webapp
-  region: ap-southeast-2
-  agent: ubuntu-20.04
-  devfiletf: 'devtest.tfvars'
-  s3deploybucket: 'kepungcodeartifact'
-  webappArtifact: 'deployment.zip'
-  devtestEnvironment: dev
-  uatEnvironment: uat
-  prodEnvironment: prod
-  
 jobs:
   tfplan:
-    uses: mitzenjeremywoo/cloudops-take-home-assignment/.github/workflows/terraform.yaml@main
-    with: 
-       tffile: 'devtest.tfvars'
-
-  appdeploy:
-    needs: [tfplan]
-    name: Web Deployment dev
+    name: Terraform plan
     runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v4
-
-      - name: zip web deployment
-        run: |
-          zip -r deployment.zip ./dist
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -45,17 +19,14 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.region }}
-
-      - name: Upload to S3
+          
+      - name: Initialise project and view terraform plan
         run: |
-          aws s3 cp ${{ env.webappArtifact }} s3://${{ env.s3deploybucket }}/${{ env.webappArtifact }}
-
-      - name: Deploy to Elastic Beanstalk
-        run: |
-          aws elasticbeanstalk create-application-version --application-name ${{ env.appname }}-${{ env.devtestEnvironment }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ env.s3deploybucket }},S3Key=${{ env.webappArtifact}}
-
-          aws elasticbeanstalk update-environment --environment-name ${{ env.devtestEnvironment }} --version-label ${{ github.sha }}
-      
+          cd infra
+          terraform fmt
+          terraform init 
+          terraform plan --var-file='${{ env.tffile }}'
+ 
   # deploy:
   #     name: Terraform Deploy
   #     needs: plan
