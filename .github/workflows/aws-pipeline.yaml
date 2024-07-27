@@ -12,7 +12,7 @@ on:
 
 env:
   region: ap-southeast-2
-  agent: $agent
+  agent: ubuntu-20.04
 
 jobs:
   plan:
