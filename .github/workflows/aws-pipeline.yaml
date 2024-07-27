@@ -12,12 +12,12 @@ on:
 
 env:
   region: ap-southeast-2
-  agent: ubuntu-20.04
+  agent: $agent
 
 jobs:
   plan:
     name: Terraform plan
-    runs-on: $env.agent
+    runs-on: $agent
 
     steps:
       - uses: actions/checkout@v3
