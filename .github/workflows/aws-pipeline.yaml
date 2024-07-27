@@ -72,8 +72,8 @@ jobs:
 
       - name: Deploy to Elastic Beanstalk
         run: |
-          aws elasticbeanstalk create-application-version --application-name ${{ env.appname }}-${{ env.env }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ secrets.s3deploybucket }},S3Key=${{ env.webappArtifact}}
-                    
+          aws elasticbeanstalk create-application-version --application-name ${{ env.appname }}-${{ env.env }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ env.s3deploybucket }},S3Key=${{ env.webappArtifact}}
+
           aws elasticbeanstalk update-environment --environment-name ${{ env.devtestEnvironment }} --version-label ${{ github.sha }}
       
   # deploy:
