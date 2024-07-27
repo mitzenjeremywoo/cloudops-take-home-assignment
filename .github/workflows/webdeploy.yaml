@@ -1,0 +1,53 @@
+on:
+  workflow_call:
+    inputs:
+      region:
+        required: true
+        type: string
+      
+      s3deploybucket:
+        required: true
+        type: string
+
+      webappArtifact:
+        required: true
+        type: string
+
+      env:
+        required: true
+        type: string
+    
+    secrets: 
+       AWS_ACCESS_KEY_ID: 
+          required: true
+       AWS_SECRET_ACCESS_KEY: 
+          required: true
+
+jobs:
+  tfplan:
+    name: Terraform plan
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: zip web deployment
+        run: |
+          zip -r deployment.zip ./dist
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ inputs.region }}
+
+      - name: Upload to S3
+        run: |
+          aws s3 cp ${{ inputs.webappArtifact }} s3://${{ inputs.s3deploybucket }}/${{ inputs.webappArtifact }}
+
+      - name: Deploy to Elastic Beanstalk
+        run: |
+          aws elasticbeanstalk create-application-version --application-name ${{ inputs.appname }}-${{ inputs.env }} --version-label ${{ github.sha }} --source-bundle S3Bucket=${{ inputs.s3deploybucket }},S3Key=${{ inputs.webappArtifact}}
+
+          aws elasticbeanstalk update-environment --environment-name ${{ inputs.env }} --version-label ${{ github.sha }}
