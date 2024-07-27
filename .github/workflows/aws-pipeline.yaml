@@ -14,9 +14,9 @@ env:
   appname: webapp
   region: ap-southeast-2
   agent: ubuntu-20.04
-  devfiletf: 'devtest.tfvars'
-  s3deploybucket: 'kepungcodeartifact'
-  webappArtifact: 'deployment.zip'
+  devfiletf: devtest.tfvars
+  s3deploybucket: kepungcodeartifact
+  webappArtifact: deployment.zip
   devtestEnvironment: dev
   uatEnvironment: uat
   prodEnvironment: prod
@@ -27,6 +27,9 @@ jobs:
     with: 
        tffile: ${{ env.devfiletf }}
        region: ${{ env.region }}
+    secrets:
+       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID}}
+       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
   appdeploy:
     needs: [tfplan]

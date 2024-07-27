@@ -1,12 +1,18 @@
 on:
   workflow_call:
     inputs:
-     tffile: 
+      tffile: 
+          required: true
+          type: string
+      region:
         required: true
-        type: string
-    region:
-      required: true
-      type: string 
+        type: string 
+
+    secrets: 
+       AWS_ACCESS_KEY_ID: 
+          required: true
+       AWS_SECRET_ACCESS_KEY: 
+          required: true
 
 jobs:
   tfplan:
