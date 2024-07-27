@@ -23,7 +23,7 @@ env:
   
 jobs:
   tfplan:
-    uses: mitzenjeremywoo/cloudops-take-home-assignment/.github/workflows/terraform.yaml@main
+    uses: .github/workflows/terraform.yaml
     with: 
       #  tffile: ${{ env.devfiletf }}
       #  region: ${{ env.region }}
