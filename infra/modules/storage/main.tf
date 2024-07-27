@@ -30,8 +30,6 @@ resource "aws_s3_bucket_public_access_block" "app" {
   restrict_public_buckets = true
 }
 
-
-
 resource "aws_cloudtrail" "s3_logging" {
 
   name                          = "${var.webapp.bucketname}-${var.webapp.env}-ct"
@@ -49,4 +47,3 @@ resource "aws_cloudtrail" "s3_logging" {
     }
   }
 }
-
