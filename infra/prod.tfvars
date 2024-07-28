@@ -3,4 +3,9 @@ webapp = {
   env        = "prod"
   sku        = "t2.xlarge"
   bucketname = "webapp-prod-bucket"
+
+  # replicas 
+  replicaMin = "1"
+  replicaMax  = "2"
+
 }

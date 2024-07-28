@@ -36,31 +36,26 @@ jobs:
           terraform init 
           terraform plan --var-file='${{ inputs.tffile }}'
  
-  # deploy:
-  #     name: Terraform Deploy
-  #     needs: plan
-  #     if: github.ref == 'refs/heads/main'
-  #     runs-on: $agent
+  deploy:
+      name: Terraform Deploy
+      needs: tfplan
+      if: github.ref == 'refs/heads/main'
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v4
 
-  #     steps:
-  #       - uses: actions/checkout@v3
-
-  #       # - name: Use Node.js 14.x
-  #       #   uses: actions/setup-node@v1
-  #       #   with:
-  #       #     node-version: 14.x
-
-  #       - name: Configure AWS credentials
-  #         uses: aws-actions/configure-aws-credentials@v2
-  #         with:
-  #           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-  #           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  #           aws-region: $region
+        - name: Configure AWS credentials
+          uses: aws-actions/configure-aws-credentials@v2
+          with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: $region
             
-  #       - name: Initialise project and deploy terraform
-  #         run: |
-  #           cd terraform
-  #           cd qa
-  #           terraform fmt
-  #           terraform init
-  #           terraform apply -var='example_api_key=${{ secrets.EXAMPLE_API_KEY }}' --auto-approve=true
+        - name: Initialise project and deploy terraform
+          run: |
+            echo 'deploying terraform'
+            # cd terraform
+            # cd qa
+            # terraform fmt
+            # terraform init
+            # terraform apply -var='example_api_key=${{ secrets.EXAMPLE_API_KEY }}' --auto-approve=true
