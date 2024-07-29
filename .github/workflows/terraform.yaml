@@ -58,4 +58,4 @@ jobs:
             # cd qa
             # terraform fmt
             # terraform init
-            # terraform apply -var='example_api_key=${{ secrets.EXAMPLE_API_KEY }}' --auto-approve=true
+            # terraform apply --var-file='${{ inputs.tffile }}' --auto-approve=true
