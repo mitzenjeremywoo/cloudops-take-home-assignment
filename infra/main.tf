@@ -18,10 +18,10 @@ module "webapp_vpc" {
 
 # elastic beanstalk 
 module "webapp" {
-  source    = "./modules/eb"
-  webapp    = var.webapp
-  partition = var.partition
-  vpc_id     = module.webapp_vpc.id
+  source              = "./modules/eb"
+  webapp              = var.webapp
+  partition           = var.partition
+  vpc_id              = module.webapp_vpc.id
   application_subnets = [module.webapp_vpc.public_subnet_id]
 }
 
