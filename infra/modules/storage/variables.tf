@@ -1,3 +1,3 @@
 variable "webapp" {
-  type = map(string)
+  type = any
 }

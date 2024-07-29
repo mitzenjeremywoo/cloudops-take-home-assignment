@@ -8,6 +8,30 @@ resource "aws_s3_bucket" "webapp_bucket" {
   }
 }
 
+data "aws_iam_policy_document" "s3_getobject_policy" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = ["302234676760"]
+    }
+    actions = [
+      "s3:GetObject",
+      "s3:PutOjbect"
+    ]
+
+    resources = [
+      aws_s3_bucket.webapp_bucket.arn,
+      "${aws_s3_bucket.webapp_bucket.arn}/*",
+    ]
+  }
+  depends_on = [aws_s3_bucket.webapp_bucket]
+}
+
+resource "aws_s3_bucket_policy" "s3_getobject_policy" {
+  bucket = aws_s3_bucket.webapp_bucket.id
+  policy = data.aws_iam_policy_document.s3_getobject_policy.json
+}
+
 resource "aws_s3_bucket_ownership_controls" "webapp_control" {
   bucket = aws_s3_bucket.webapp_bucket.id
   rule {

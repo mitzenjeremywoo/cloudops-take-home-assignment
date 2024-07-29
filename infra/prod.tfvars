@@ -6,6 +6,6 @@ webapp = {
 
   # replicas 
   replicaMin = "1"
-  replicaMax  = "2"
+  replicaMax = "2"
 
 }
