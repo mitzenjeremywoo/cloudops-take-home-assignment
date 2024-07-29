@@ -1,6 +1,3 @@
-
-
-
 data "aws_iam_policy_document" "default" {
   statement {
     actions = [
@@ -209,10 +206,8 @@ resource "aws_iam_role_policy_attachment" "service" {
   policy_arn = var.webapp.eb_service_role
 }
 
-# ec2 role 
-
 #
-# EC2
+# EC2 role
 #
 data "aws_iam_policy_document" "ec2" {
   statement {
@@ -385,7 +380,7 @@ resource "aws_elastic_beanstalk_environment" "ebenvironment" {
     resource  = ""
   }
 
-  # Loggings    
+  # Loggings
   setting {
     namespace = "aws:elasticbeanstalk:hostmanager"
     name      = "LogPublicationControl"
