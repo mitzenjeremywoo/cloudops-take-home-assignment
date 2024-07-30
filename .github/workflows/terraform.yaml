@@ -54,8 +54,5 @@ jobs:
         - name: Initialise project and deploy terraform
           run: |
             echo 'deploying terraform'
-            cd terraform
-            cd qa
-            terraform fmt
             terraform init
             terraform apply --var-file='${{ inputs.tffile }}' --auto-approve=true
