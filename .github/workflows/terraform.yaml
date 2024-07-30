@@ -52,9 +52,8 @@ jobs:
             aws-region: ${{ inputs.region }}
             
         - name: Initialise project and deploy terraform
-          run: |
-            pwd 
-            ls -al -R
+          run: |           
             echo 'deploying terraform'
+            cd infra         
             terraform init
             terraform apply --var-file='${{ inputs.tffile }}' --auto-approve=true
