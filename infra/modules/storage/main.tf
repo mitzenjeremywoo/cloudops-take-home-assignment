@@ -10,17 +10,19 @@ resource "aws_s3_bucket" "webapp_bucket" {
 
 data "aws_iam_policy_document" "s3_getobject_policy" {
   statement {
+    
     principals {
       type        = "AWS"
       identifiers = ["302234676760"]
     }
+
     actions = [
       "s3:GetObject",
       "s3:PutObject"
     ]
 
     resources = [
-      aws_s3_bucket.webapp_bucket.arn
+      "arn:aws:s3:::*"
     ]
   }
   depends_on = [aws_s3_bucket.webapp_bucket]
