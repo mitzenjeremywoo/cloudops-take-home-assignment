@@ -16,11 +16,7 @@ data "aws_iam_policy_document" "s3_getobject_policy" {
       identifiers = ["302234676760"]
     }
 
-    actions = [
-      "s3:GetObject",
-      "s3:ListBucket",
-      "s3:PutObject",
-    ]
+    actions = ["s3:*"]
 
     resources = [
       aws_s3_bucket.webapp_bucket.arn,
@@ -57,20 +53,19 @@ resource "aws_s3_bucket_acl" "webapp_bucket_acl" {
 #   restrict_public_buckets = true
 # }
 
-resource "aws_cloudtrail" "s3_logging" {
+# resource "aws_cloudtrail" "s3_logging" {
+#   name                          = "${var.webapp.bucketname}-${var.webapp.env}-ct"
+#   s3_bucket_name                = aws_s3_bucket.webapp_bucket.id
+#   s3_key_prefix                 = "prefix"
+#   include_global_service_events = true
 
-  name                          = "${var.webapp.bucketname}-${var.webapp.env}-ct"
-  s3_bucket_name                = aws_s3_bucket.webapp_bucket.id
-  s3_key_prefix                 = "prefix"
-  include_global_service_events = true
+#   event_selector {
+#     read_write_type           = "All"
+#     include_management_events = true
 
-  event_selector {
-    read_write_type           = "All"
-    include_management_events = true
-
-    data_resource {
-      type   = "AWS::S3::Object"
-      values = ["arn:aws:s3"]
-    }
-  }
-}
+#     data_resource {
+#       type   = "AWS::S3::Object"
+#       values = ["arn:aws:s3"]
+#     }
+#   }
+# }
