@@ -16,12 +16,11 @@ data "aws_iam_policy_document" "s3_getobject_policy" {
     }
     actions = [
       "s3:GetObject",
-      "s3:PutOjbect"
+      "s3:PutObject"
     ]
 
     resources = [
-      aws_s3_bucket.webapp_bucket.arn,
-      "${aws_s3_bucket.webapp_bucket.arn}/*",
+      aws_s3_bucket.webapp_bucket.arn
     ]
   }
   depends_on = [aws_s3_bucket.webapp_bucket]
@@ -67,7 +66,7 @@ resource "aws_cloudtrail" "s3_logging" {
 
     data_resource {
       type   = "AWS::S3::Object"
-      values = ["${aws_s3_bucket.webapp_bucket.arn}/"]
+      values = ["arn:aws:s3"]
     }
   }
 }

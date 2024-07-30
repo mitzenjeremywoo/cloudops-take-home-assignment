@@ -19,8 +19,8 @@ webapp = {
   associate_public_ip_address = true
 
   # service                       
-  eb_service_role              = "arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy"
-  
+  eb_service_role = "arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy"
+
   extended_ec2_policy_document = ""
 
   # replicas 
