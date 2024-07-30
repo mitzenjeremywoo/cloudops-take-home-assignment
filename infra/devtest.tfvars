@@ -5,7 +5,7 @@ webapp = {
   description            = "webapp dev environment"
   version_label          = ""
   sku                    = "t2.micro"
-  bucketname             = "webapp-dev-bucket"
+  bucketname             = "webapp-main-bucketrc"
   wait_for_ready_timeout = "20m"
 
   enable_capacity_rebalancing    = true
