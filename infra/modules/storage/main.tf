@@ -10,7 +10,7 @@ resource "aws_s3_bucket" "webapp_bucket" {
 
 data "aws_iam_policy_document" "s3_getobject_policy" {
   statement {
-    
+
     principals {
       type        = "AWS"
       identifiers = ["302234676760"]
@@ -18,11 +18,13 @@ data "aws_iam_policy_document" "s3_getobject_policy" {
 
     actions = [
       "s3:GetObject",
-      "s3:PutObject"
+      "s3:ListBucket",
+      "s3:PutObject",
     ]
 
     resources = [
-      "arn:aws:s3:::*"
+      aws_s3_bucket.webapp_bucket.arn,
+      "${aws_s3_bucket.webapp_bucket.arn}/*",
     ]
   }
   depends_on = [aws_s3_bucket.webapp_bucket]
@@ -47,13 +49,13 @@ resource "aws_s3_bucket_acl" "webapp_bucket_acl" {
   acl    = "private"
 }
 
-resource "aws_s3_bucket_public_access_block" "app" {
-  bucket                  = aws_s3_bucket.webapp_bucket.id
-  block_public_acls       = true
-  block_public_policy     = true
-  ignore_public_acls      = true
-  restrict_public_buckets = true
-}
+# resource "aws_s3_bucket_public_access_block" "app" {
+#   bucket                  = aws_s3_bucket.webapp_bucket.id
+#   block_public_acls       = true
+#   block_public_policy     = true
+#   ignore_public_acls      = true
+#   restrict_public_buckets = true
+# }
 
 resource "aws_cloudtrail" "s3_logging" {
 

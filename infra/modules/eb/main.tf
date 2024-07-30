@@ -280,7 +280,7 @@ resource "aws_elastic_beanstalk_environment" "ebenvironment" {
   version_label          = var.webapp.version_label
 
 
-  solution_stack_name = "64bit Amazon Linux 2"
+  solution_stack_name = "64bit Amazon Linux 2023 v4.1.2 running Python 3.11"
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
