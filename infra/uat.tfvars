@@ -1,6 +1,6 @@
 webapp = {
   name                   = "webapp"
-  env                    = "uat"
+  env                    = "uatenv"
   tier                   = "WebServer"
   description            = "webapp uat environment"
   version_label          = ""

@@ -1,6 +1,6 @@
 webapp = {
   name                   = "webapp"
-  env                    = "prod"
+  env                    = "prodenv"
   tier                   = "WebServer"
   description            = "webapp prod environment"
   version_label          = ""

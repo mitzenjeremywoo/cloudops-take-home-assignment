@@ -1,6 +1,6 @@
 webapp = {
   name                   = "webapp"
-  env                    = "dev"
+  env                    = "devtest"
   tier                   = "WebServer"
   description            = "webapp dev environment"
   version_label          = ""
@@ -18,8 +18,9 @@ webapp = {
   # network 
   associate_public_ip_address = true
 
-  # service 
-  eb_service_role              = "arn:aws:iam::302234676760:role/service-role/aws-elasticbeanstalk-service-role"
+  # service                       
+  eb_service_role              = "arn:aws:iam::aws:policy/AWSElasticBeanstalkManagedUpdatesCustomerRolePolicy"
+  
   extended_ec2_policy_document = ""
 
   # replicas 
