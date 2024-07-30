@@ -269,6 +269,8 @@ resource "aws_iam_instance_profile" "ec2" {
 }
 
 ## EB environment 
+## https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/command-options-general.html#command-options-general-environmentproxystaticfiles
+
 resource "aws_elastic_beanstalk_environment" "ebenvironment" {
   name                   = var.webapp.env
   application            = aws_elastic_beanstalk_application.webapp.name

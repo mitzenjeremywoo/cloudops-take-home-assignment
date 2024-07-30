@@ -17,7 +17,6 @@ webapp = {
 
   # network 
   associate_public_ip_address = true
-  application_subnets         = ["subnet-0bf87a977ddb585bc", "subnet-0babd975e40844acc"]
 
   # service 
   eb_service_role              = "arn:aws:iam::302234676760:role/service-role/aws-elasticbeanstalk-service-role"
