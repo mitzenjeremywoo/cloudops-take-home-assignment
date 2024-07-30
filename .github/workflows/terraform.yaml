@@ -53,6 +53,8 @@ jobs:
             
         - name: Initialise project and deploy terraform
           run: |
+            pwd 
+            ls -al -R
             echo 'deploying terraform'
             terraform init
             terraform apply --var-file='${{ inputs.tffile }}' --auto-approve=true
