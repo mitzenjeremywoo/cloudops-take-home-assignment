@@ -3,12 +3,12 @@ name: Cloudops sample deployment
 on:
   workflow_dispatch:
   push:
-    branches: [main]
-  #  paths: ["infra/**"]
+    branches: [main-temp]
+    paths: ["infra/**"]
 
   pull_request:
-    branches: [main]
-  #  paths: ["infra/**"]
+    branches: [main-temp]
+    paths: ["infra/**"]
 
 env:
   appname: webapp
@@ -38,7 +38,7 @@ jobs:
     with:
       appname: app1
       region: ap-southeast-2
-      s3deploybucket: kepungcodeartifact
+      s3deploybucket: webapp-main-bucketrc
       webappArtifact: deployment.zip
       env: app1-dev
 
