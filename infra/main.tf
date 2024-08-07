@@ -23,7 +23,7 @@ module "webapp" {
   webapp              = var.webapp
   partition           = var.partition
   vpc_id              = module.webapp_vpc.id
-  application_subnets = [module.webapp_vpc.public_subnet_id]
+  application_subnets = [module.webapp_vpc.private_subnet_id]
 }
 
 # storage for deployment

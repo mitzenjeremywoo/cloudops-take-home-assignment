@@ -276,6 +276,17 @@ resource "aws_elastic_beanstalk_environment" "ebenvironment" {
   wait_for_ready_timeout = var.webapp.wait_for_ready_timeout
   version_label          = var.webapp.version_label
 
+  ## load balancer settings
+  
+  dynamic "setting" {
+    for_each = local.elb_settings_final
+    content {
+      namespace = setting.value["namespace"]
+      name      = setting.value["name"]
+      value     = setting.value["value"]
+      resource  = ""
+    }
+  }
 
   solution_stack_name = "64bit Amazon Linux 2023 v4.1.2 running Python 3.11"
 
