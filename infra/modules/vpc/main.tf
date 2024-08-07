@@ -51,7 +51,7 @@ resource "aws_security_group" "webapp_sg" {
  }
 }
 
-# subnet 
+# public subnet 
 resource "aws_subnet" "public" {
  vpc_id = aws_vpc.webapp_vpc.id
  cidr_block = var.vpc.public_cidr
@@ -61,6 +61,19 @@ resource "aws_subnet" "public" {
 
  tags = {
   Name = "${var.vpc.name} public subnet"
+ } 
+}
+
+# private subnet
+resource "aws_subnet" "private" {
+ vpc_id = aws_vpc.webapp_vpc.id
+ cidr_block = var.vpc.private_cidr
+ 
+ availability_zone = var.vpc.availability_zone
+ map_public_ip_on_launch = "false"
+
+ tags = {
+  Name = "${var.vpc.name} private subnet"
  } 
 }
 

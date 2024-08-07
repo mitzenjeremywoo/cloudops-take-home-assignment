@@ -34,5 +34,6 @@ vpc = {
   name              = "webapp-vpc"
   vpc_cidr          = "10.0.0.0/16"
   public_cidr       = "10.0.0.0/26"
+  private_cidr      = "10.0.1.0/26"
   availability_zone = "ap-southeast-2a"
 }
